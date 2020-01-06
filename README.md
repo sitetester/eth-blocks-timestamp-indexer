@@ -1,0 +1,3 @@
+- Remove db/blocks.db (if want to start from block# 0)
+- Run `knex migrate:latest` to update db schema
+- Run `node cron/index.js` at root of project to start parsing # app-eth-blocks-timestamp-indexer

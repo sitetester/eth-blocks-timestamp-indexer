@@ -1,0 +1,17 @@
+{
+  "dbPath": "./db/blocks.db",
+  "web3": {
+    "httpProvider": "https://mainnet.infura.io/v3/c8d36b72d2d04f16a94931809cdf6383"
+  },
+  "logPath": {
+    "error": "./log/error.log",
+    "combined": "./log/combined.log"
+  },
+  "cron": {
+    "indexer": {
+      "maxProcessCount": 5,
+      "blocksPerProcess": 10,
+      "schedule": "* * * * *"
+    }
+  }
+}
