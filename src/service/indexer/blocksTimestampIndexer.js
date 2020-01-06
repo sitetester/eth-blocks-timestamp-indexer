@@ -8,10 +8,14 @@ module.exports = (
     timestampToUtcDateConverter,
     blocksTimestampsRepository
 ) => ({
-    // Increasing upperBlockNumber more than 400 causes Error: SQLITE_ERROR: too many SQL variables
-    async startParsing({fromBlockNumber, toBlockNumber, blocksPerProcess}) {
-        let parsedBlocks = [];
+    /**
+     * Starts from least|min block number and continually proceeds upwards (through cron script)
+     * parse each block number along with it's timestamp
+     */
+    async startWith({fromBlockNumber, toBlockNumber, blocksPerProcess}) {
+        logger.info(`Parsing blocks range: ${fromBlockNumber} - ${toBlockNumber}`);
 
+        let parsedBlocks = [];
         for (let blockNumber = fromBlockNumber; blockNumber <= toBlockNumber; blockNumber++) {
             const block = web3.eth.getBlock(blockNumber);
             if (block) {
@@ -25,15 +29,6 @@ module.exports = (
         }
 
         await blocksTimestampsRepository.batchPersistBlockTimestampDate(parsedBlocks);
-    },
-
-    /**
-     * Starts from least|min block number and continually proceeds upwards (through cron script)
-     * parse each block number along with it's timestamp
-     */
-    async start({fromBlockNumber, toBlockNumber, blocksPerProcess}) {
-        logger.info(`Parsing blocks range: ${fromBlockNumber} - ${toBlockNumber}`);
-        await this.startParsing({fromBlockNumber, toBlockNumber, blocksPerProcess});
         return true;
     },
 });
