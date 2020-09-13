@@ -1,2 +1,4 @@
 .idea
 node_modules
+db/blocks.db
+log/combined.log
