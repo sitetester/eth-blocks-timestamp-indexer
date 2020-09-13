@@ -12,7 +12,7 @@ module.exports = (
      * Starts from least|min block number and continually proceeds upwards (through cron script)
      * parse each block number along with it's timestamp
      */
-    async startWith({fromBlockNumber, toBlockNumber, blocksPerProcess}) {
+    async startWith({fromBlockNumber, toBlockNumber}) {
         logger.info(`Parsing blocks range: ${fromBlockNumber} - ${toBlockNumber}`);
 
         let parsedBlocks = [];
